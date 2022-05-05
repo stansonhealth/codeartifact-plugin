@@ -65,20 +65,6 @@ class CodeArtifactRepoConfigurerTest {
                     verifyRepositories(repositories)
                 }
             }
-
-            fun verifyRepositories(
-                repositoryHandler: RepositoryHandler
-            ) {
-                repositoryHandler.forEach {
-                    if (it is MavenArtifactRepository) {
-                        println("\t" + it.name + ":")
-                        println("\t\tusername:" + it.credentials.username)
-                        it.credentials.username.shouldBe("AWS")
-                        println("\t\tpassword:" + it.credentials.password)
-                        it.credentials.password.shouldBe("success")
-                    }
-                }
-            }
         """.trimIndent())
         File("${tempDir.absolutePath}/build.gradle.kts").writeText("""
             repositories {
@@ -112,6 +98,34 @@ class CodeArtifactRepoConfigurerTest {
                 mavenCentral()
                 maven {
                     url = java.net.URI("https://foo.com/repo/")
+                }
+            }
+        """.trimIndent())
+        runBuild()
+    }
+
+    @Test
+    fun `should set credentials on the publishing repositories`() {
+        buildSettingsFile("""
+            gradle.allprojects {
+                afterEvaluate {
+                    extensions.findByType(PublishingExtension::class.java)?.let { publishingExtension ->
+                        verifyRepositories(publishingExtension.repositories)
+                    }
+                }
+            }
+        """.trimIndent())
+        File("${tempDir.absolutePath}/build.gradle.kts").writeText("""
+            plugins {
+                `maven-publish`
+            }
+            
+            publishing {
+                repositories {
+                    maven {
+                        name = "publishing-codeartifact-repo"
+                        url = java.net.URI("https://domain-accountId.d.codeartifact.region.amazonaws.com/repo")
+                    }
                 }
             }
         """.trimIndent())
@@ -165,6 +179,20 @@ class CodeArtifactRepoConfigurerTest {
             }
             
             $verification
+
+            fun verifyRepositories(
+                repositoryHandler: RepositoryHandler
+            ) {
+                repositoryHandler.forEach {
+                    if (it is MavenArtifactRepository) {
+                        println("\t" + it.name + ":")
+                        println("\t\tusername:" + it.credentials.username)
+                        it.credentials.username.shouldBe("AWS")
+                        println("\t\tpassword:" + it.credentials.password)
+                        it.credentials.password.shouldBe("success")
+                    }
+                }
+            }
         """.trimIndent()
         )
     }

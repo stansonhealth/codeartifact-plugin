@@ -55,7 +55,7 @@ gradlePlugin {
     plugins {
         val codeartifactPlugin = this.findByName("com.stansonhealth.codeartifact")
         codeartifactPlugin?.displayName = "Plugin to set credentials for AWS Codeartifact repositories"
-        codeartifactPlugin?.description = "Configures credentials for all AWS Codeartifact repositories defined in the settings and project build files"
+        codeartifactPlugin?.description = "Configures credentials for all AWS Codeartifact repositories defined in the settings and project files"
     }
 }
 

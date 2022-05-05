@@ -7,11 +7,17 @@ gradle.settingsEvaluated {
     dependencyResolutionManagement {
         configureRepositories(repositories)
     }
+    extensions.findByType(PublishingExtension::class.java)?.let { publishingExtension ->
+        configureRepositories(publishingExtension.repositories)
+    }
 }
 
 gradle.allprojects {
     afterEvaluate {
         configureRepositories(repositories)
+        extensions.findByType(PublishingExtension::class.java)?.let { publishingExtension ->
+            configureRepositories(publishingExtension.repositories)
+        }
     }
 }
 
