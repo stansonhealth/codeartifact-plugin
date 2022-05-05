@@ -73,9 +73,9 @@ class CodeArtifactRepoConfigurerTest {
                     if (it is MavenArtifactRepository) {
                         println("\t" + it.name + ":")
                         println("\t\tusername:" + it.credentials.username)
-                        it.credentials.username shouldBe "AWS"
+                        it.credentials.username.shouldBe("AWS")
                         println("\t\tpassword:" + it.credentials.password)
-                        it.credentials.password shouldBe "success"
+                        it.credentials.password.shouldBe("success")
                     }
                 }
             }
