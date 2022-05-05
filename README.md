@@ -7,9 +7,9 @@ Configures credentials for all Maven [AWS CodeArtifact](https://aws.amazon.com/c
 **Note:** Because Gradle does not provide hooks for configuring Repositories within a BuildScript block, this plugin
 is unable to configure the credentials
 
-## Advanates/Features
+## Advantages/Features
 
-Besides setting credentials for all repositories, this plugin provides the following advantages:
+Besides setting credentials for all repositories, this plugin provides the following advantages/features:
 
 - Supports JDK 1.8 and greater
 - Dynamically determines whether the publishing plugin is present and configures credentials accordingly.  It does
