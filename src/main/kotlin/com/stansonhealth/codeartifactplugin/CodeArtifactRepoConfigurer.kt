@@ -1,40 +1,32 @@
 package com.stansonhealth.codeartifactplugin
 
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.provider.Property
 import org.gradle.api.services.BuildService
 import org.gradle.api.services.BuildServiceParameters
-import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.codeartifact.CodeartifactClient
 
-abstract class CodeArtifactRepoConfigurer: BuildService<BuildServiceParameters.None> {
+abstract class CodeArtifactRepoConfigurer: BuildService<CodeArtifactRepoConfigurer.Params> {
 
-    private val codeArtifactClients = mutableMapOf<String, String>()
-
-    companion object {
-        val AWS_USER = "AWS"
-        val CODEARTIFACT_URL = Regex("^http[s]?://([^\\.^-]+)-([^\\.]+)\\.[^\\.]+\\.codeartifact\\.([^\\.]+)\\..*\$")
+    interface Params : BuildServiceParameters {
+        fun getTokenFactory() : Property<CodeArtifactTokenFactory>
     }
 
-    fun configureRepo(repo: MavenArtifactRepository) {
+    companion object {
+        const val AWS_USER = "AWS"
+        val CODEARTIFACT_URL = Regex("https://([^.^-]+)-([^.]+)\\.[^.]+\\.codeartifact\\.([^.]+)\\..*")
+    }
+
+    private val codeArtifactTokenFactory = parameters
+        .getTokenFactory()
+        .getOrElse(AwsCodeArtifactFactory())
+
+    open fun configureRepo(repo: MavenArtifactRepository) {
         CODEARTIFACT_URL.matchEntire(repo.url.toASCIIString())?.let {
             val (domain, accountId, region) = it.destructured
-            val codeArtifactToken = getToken(domain, accountId, region)
             repo.credentials {
                 username = AWS_USER
-                password = codeArtifactToken
+                password = codeArtifactTokenFactory.createToken(domain, accountId, region)
             }
         }
     }
-
-    fun getToken(domain: String, accountId: String, region: String): String =
-        codeArtifactClients.getOrPut("$domain.$accountId.$region") {
-            CodeartifactClient
-                .builder()
-                .region(Region.of(region))
-                .build()
-                .getAuthorizationToken {
-                    it.domain(domain).domainOwner(accountId)
-                }
-                .authorizationToken()
-       }
 }
