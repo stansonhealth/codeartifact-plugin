@@ -5,15 +5,13 @@ import software.amazon.awssdk.services.codeartifact.CodeartifactClient
 import software.amazon.awssdk.services.codeartifact.CodeartifactClientBuilder
 
 class AwsCodeArtifactFactory(
-    codeArtifactClientFactory: CodeArtifactClientBuilderFactory? = null
+    val codeArtifactClientFactory: CodeArtifactClientBuilderFactory =
+        CodeArtifactClientBuilderFactory { CodeartifactClient.builder() }
 ) : CodeArtifactTokenFactory {
 
     fun interface CodeArtifactClientBuilderFactory {
         fun buildClientBuilder(): CodeartifactClientBuilder
     }
-
-    val codeArtifactClientFactory = codeArtifactClientFactory
-        ?: CodeArtifactClientBuilderFactory { CodeartifactClient.builder() }
 
     private val codeArtifactClients = mutableMapOf<String, String>()
 
