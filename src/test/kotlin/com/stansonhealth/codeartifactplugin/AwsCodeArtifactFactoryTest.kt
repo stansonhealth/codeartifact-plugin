@@ -41,7 +41,7 @@ class AwsCodeArtifactFactoryTest {
     }
 
     @Test
-    fun `should build a CodeartifactClientBuilder`() {
+    fun `should build a CodeArtifactClientBuilder`() {
         val awsCodeArtifactFactory = AwsCodeArtifactFactory()
         awsCodeArtifactFactory
             .codeArtifactClientFactory
