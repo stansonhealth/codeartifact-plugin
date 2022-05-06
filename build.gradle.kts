@@ -47,7 +47,7 @@ pluginBundle {
     website = "https://github.com/stansonhealth/codeartifact-plugin"
     vcsUrl = "https://github.com/stansonhealth/codeartifact-plugin"
 
-    description = "AWS Authentication Plugins."
+    description = "AWS Authentication Plugins"
     tags = mutableListOf("aws", "codeartifact", "publishing")
 }
 

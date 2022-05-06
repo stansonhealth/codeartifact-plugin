@@ -23,7 +23,7 @@ not require a separate plugin to support publishing.
 All that is required to use the plug is to add the following into `settings.gradle`:
 ```
 plugins {
-    id("com.stansonhealth.codeartifact").version("1.0.0")
+    id("com.stansonhealth.codeartifact") version "1.0.0"
 }
 ```
 
