@@ -9,7 +9,6 @@ import org.gradle.api.Action
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.artifacts.repositories.PasswordCredentials
 import org.gradle.api.provider.Property
-import org.gradle.kotlin.dsl.invoke
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.Test
 import java.io.File
