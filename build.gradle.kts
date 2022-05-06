@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.stansonhealth"
-version = "1.0.0"
+version = "1.0.0.1"
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
