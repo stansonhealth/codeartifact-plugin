@@ -4,7 +4,7 @@
 
 Configures credentials for all Maven [AWS CodeArtifact](https://aws.amazon.com/codeartifact/) Repositories defined within the gradle settings and project files.
 
-**Note:** Because Gradle does not provide hooks for configuring Repositories within a BuildScript block, this plugin
+**Note:** Because Gradle does not provide hooks for configuring Repositories within a `buildScript` block, this plugin
 is unable to configure the credentials for BuildScript repositories.
 
 ## Advantages/Features
