@@ -162,7 +162,7 @@ class CodeArtifactRepoConfigurerTest {
                 }
             }
                        
-            class MockFactory : CodeArtifactTokenFactory, Serializable {
+            class MockFactory: CodeArtifactTokenFactory, Serializable {
                 override fun createToken(domain: String, accountId: String, region: String) = "success"
             }
 
