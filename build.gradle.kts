@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.21")
     implementation("software.amazon.awssdk:codeartifact:2.17.181")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("io.kotest:kotest-assertions-core:5.3.0")

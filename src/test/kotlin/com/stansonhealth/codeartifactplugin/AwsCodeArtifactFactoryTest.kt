@@ -24,7 +24,6 @@ class AwsCodeArtifactFactoryTest {
         val tokenRequestBuilder = mockk<GetAuthorizationTokenRequest.Builder>()
         val getAuthorizationTokenResponse = mockk<GetAuthorizationTokenResponse>()
         val success = "success"
-        val awsCodeArtifactFactory = AwsCodeArtifactFactory(codeArtifactClientBuilderFactory)
 
         every { codeArtifactClientBuilderFactory.buildClientBuilder() } returns codeartifactClientBuilder
         every { codeartifactClientBuilder.region(Region.of("region")) } returns codeartifactClientBuilder
@@ -34,6 +33,7 @@ class AwsCodeArtifactFactoryTest {
         every { tokenRequestBuilder.domain("domain") } returns tokenRequestBuilder
         every { tokenRequestBuilder.domainOwner("accountId") } returns tokenRequestBuilder
 
+        val awsCodeArtifactFactory = AwsCodeArtifactFactory(codeArtifactClientBuilderFactory)
         val result = awsCodeArtifactFactory.createToken("domain", "accountId", "region")
         tokenRequestBuilderLambda.captured.accept(tokenRequestBuilder)
 
