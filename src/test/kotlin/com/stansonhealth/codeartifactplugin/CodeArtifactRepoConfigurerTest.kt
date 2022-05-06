@@ -18,7 +18,6 @@ import kotlin.io.path.createTempDirectory
 
 class CodeArtifactRepoConfigurerTest {
 
-
     companion object {
         @OptIn(ExperimentalPathApi::class)
         val tempDir = createTempDirectory("codeartifacttest")
