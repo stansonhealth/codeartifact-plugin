@@ -46,7 +46,7 @@ class CodeArtifactRepoConfigurerTest {
                 }
         }
         codeArtifactRepoConfigurer.configureRepo(mavenArtifactRepository)
-        credentialsLambda.captured.invoke(passwordCredentials)
+        credentialsLambda.captured.execute(passwordCredentials)
 
         verify { passwordCredentials.username = CodeArtifactRepoConfigurer.AWS_USER }
         verify { passwordCredentials.password = expectedToken }
