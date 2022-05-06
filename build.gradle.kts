@@ -34,6 +34,7 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
+            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
             jvmTarget = "1.8"
         }
     }
@@ -48,7 +49,7 @@ pluginBundle {
     vcsUrl = "https://github.com/stansonhealth/codeartifact-plugin"
 
     description = "AWS Authentication Plugins"
-    tags = mutableListOf("aws", "codeartifact", "publishing")
+    tags = mutableListOf("aws", "codeartifact", "publishing", "repositories")
 }
 
 gradlePlugin {

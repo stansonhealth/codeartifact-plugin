@@ -13,12 +13,15 @@ import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.net.URI
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.createTempDirectory
 
 class CodeArtifactRepoConfigurerTest {
 
 
     companion object {
-        val tempDir = createTempDir("codeartifacttest")
+        @OptIn(ExperimentalPathApi::class)
+        val tempDir = createTempDirectory("codeartifacttest")
         private val classpath = System.getProperty("java.class.path").replace(":", "\",\"")
         private val workingDir = System.getProperty("user.dir")
         val scriptClasspath = "\"$workingDir/build/classes/kotlin/main\",\"$classpath\""
@@ -137,7 +140,7 @@ class CodeArtifactRepoConfigurerTest {
     }
 
     private fun buildSettingsFile(verification: String) {
-        File("${tempDir.absolutePath}/settings.gradle.kts").writeText("""
+        File("${tempDir}/settings.gradle.kts").writeText("""
             import com.stansonhealth.codeartifactplugin.CodeArtifactRepoConfigurer
             import com.stansonhealth.codeartifactplugin.CodeArtifactTokenFactory
             import java.io.Serializable
@@ -199,12 +202,12 @@ class CodeArtifactRepoConfigurerTest {
     }
 
     private fun buildBuildFile(content: String) {
-        File("${tempDir.absolutePath}/build.gradle.kts").writeText(content)
+        File("${tempDir}/build.gradle.kts").writeText(content)
     }
 
     private fun runBuild() {
         val results = GradleRunner.create()
-            .withProjectDir(tempDir)
+            .withProjectDir(tempDir.toFile())
             .withDebug(true)
             .withPluginClasspath()
             .withArguments("build", "--stacktrace")
