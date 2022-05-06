@@ -83,6 +83,7 @@ class CodeArtifactRepoConfigurerTest {
         buildSettingsFile("""
             gradle.allprojects {
                 afterEvaluate {
+                    repositories.size.shouldBe(3)
                     repositories.forEach { repo ->
                         if (repo is MavenArtifactRepository) {
                             repo.credentials.username.shouldBe(null)
