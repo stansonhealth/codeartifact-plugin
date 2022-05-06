@@ -1,7 +1,5 @@
 # codeartifact-plugin
 
-[comment]: <> ([![Gradle Plugin Portal]&#40;https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/co/bound/plugins/maven-metadata.xml.svg?colorB=007ec6&label=Plugin%20Portal&#41;]&#40;https://plugins.gradle.org/plugin/co.bound.codeartifact&#41;)
-
 Configures credentials for all Maven [AWS CodeArtifact](https://aws.amazon.com/codeartifact/) Repositories defined within the gradle settings and project files.
 
 **Note:** Because Gradle does not provide hooks for configuring Repositories within a `buildScript` block, this plugin
