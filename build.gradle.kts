@@ -22,7 +22,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("software.amazon.awssdk:codeartifact:2.17.181")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
+    testImplementation("io.kotest:kotest-assertions-core:5.3.0")
     testImplementation("io.mockk:mockk:1.12.3")
     testImplementation(gradleTestKit())
 }
