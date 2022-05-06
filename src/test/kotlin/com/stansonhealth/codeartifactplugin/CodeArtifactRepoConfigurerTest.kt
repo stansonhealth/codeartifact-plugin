@@ -59,7 +59,6 @@ class CodeArtifactRepoConfigurerTest {
                 println("Settings Results:")
                 verifyRepositories(pluginManagement.repositories)
                 verifyRepositories(dependencyResolutionManagement.repositories)
-                println("")
             }
             
             gradle.allprojects {
