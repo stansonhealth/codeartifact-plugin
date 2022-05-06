@@ -20,6 +20,9 @@ class CodeArtifactRepoConfigurerTest {
 
     companion object {
         val tempDir = createTempDir("codeartifacttest")
+        private val classpath = System.getProperty("java.class.path").replace(":", "\",\"")
+        private val workingDir = System.getProperty("user.dir")
+        val scriptClasspath = "\"$workingDir/build/classes/kotlin/main\",\"$classpath\""
     }
 
     @Test
@@ -136,9 +139,6 @@ class CodeArtifactRepoConfigurerTest {
     }
 
     private fun buildSettingsFile(verification: String) {
-        val classpath = System.getProperty("java.class.path").replace(":", "\",\"")
-        val workingDir = System.getProperty("user.dir")
-        val cp = "\"$workingDir/build/classes/kotlin/main\",\"$classpath\""
         File("${tempDir.absolutePath}/settings.gradle.kts").writeText("""
             import com.stansonhealth.codeartifactplugin.CodeArtifactRepoConfigurer
             import com.stansonhealth.codeartifactplugin.CodeArtifactTokenFactory
@@ -157,7 +157,7 @@ class CodeArtifactRepoConfigurerTest {
 
             buildscript {
                 dependencies {
-                    classpath(files($cp))
+                    classpath(files($scriptClasspath))
                 }
             }
                        
