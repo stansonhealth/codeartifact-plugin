@@ -25,9 +25,9 @@ fun configureRepositories(
     repositoryHandler: RepositoryHandler
 ) {
     val serviceProvider = getCodeArtifactRepoConfigurer()
-    repositoryHandler.forEach {
-        if (it is MavenArtifactRepository) {
-            serviceProvider.configureRepo(it)
+    repositoryHandler.forEach { repo ->
+        if (repo is MavenArtifactRepository) {
+            serviceProvider.configureRepo(repo)
         }
     }
 }
