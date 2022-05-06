@@ -47,7 +47,6 @@ tasks {
 pluginBundle {
     website = "https://github.com/stansonhealth/codeartifact-plugin"
     vcsUrl = "https://github.com/stansonhealth/codeartifact-plugin"
-    description = "AWS Authentication Plugins"
     (plugins) {
         "com.stansonhealth.codeartifact" {
             displayName = "Plugin to set credentials for AWS Codeartifact repositories"
