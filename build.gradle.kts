@@ -47,16 +47,13 @@ tasks {
 pluginBundle {
     website = "https://github.com/stansonhealth/codeartifact-plugin"
     vcsUrl = "https://github.com/stansonhealth/codeartifact-plugin"
-
     description = "AWS Authentication Plugins"
-    tags = mutableListOf("aws", "codeartifact", "publishing", "repositories")
-}
-
-gradlePlugin {
-    plugins {
-        val codeartifactPlugin = this.findByName("com.stansonhealth.codeartifact")
-        codeartifactPlugin?.displayName = "Plugin to set credentials for AWS Codeartifact repositories"
-        codeartifactPlugin?.description = "Configures credentials for all AWS Codeartifact repositories defined in the settings and project files"
+    (plugins) {
+        "com.stansonhealth.codeartifact" {
+            displayName = "Plugin to set credentials for AWS Codeartifact repositories"
+            description = "Configures credentials for all AWS Codeartifact repositories defined in the settings and project files"
+            tags = mutableListOf("aws", "codeartifact", "publishing", "repositories")
+        }
     }
 }
 
