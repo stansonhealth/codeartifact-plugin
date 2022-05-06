@@ -66,14 +66,15 @@ class CodeArtifactRepoConfigurerTest {
                 }
             }
         """.trimIndent())
-        File("${tempDir.absolutePath}/build.gradle.kts").writeText("""
-            repositories {
-                maven {
-                    name = "project repository"
-                    url = java.net.URI("https://domain-accountId.d.codeartifact.region.amazonaws.com/repo/")
+        buildBuildFile("""
+                repositories {
+                    maven {
+                        name = "project repository"
+                        url = java.net.URI("https://domain-accountId.d.codeartifact.region.amazonaws.com/repo/")
+                    }
                 }
-            }
-        """.trimIndent())
+            """.trimIndent()
+        )
         runBuild()
     }
 
@@ -82,17 +83,17 @@ class CodeArtifactRepoConfigurerTest {
         buildSettingsFile("""
             gradle.allprojects {
                 afterEvaluate {
-                    (repositories[0] as MavenArtifactRepository).credentials.username shouldBe null
-                    (repositories[0] as MavenArtifactRepository).credentials.password shouldBe null
-                    (repositories[1] as MavenArtifactRepository).credentials.username shouldBe null
-                    (repositories[1] as MavenArtifactRepository).credentials.password shouldBe null
-                    (repositories[2] as MavenArtifactRepository).credentials.username shouldBe null
-                    (repositories[2] as MavenArtifactRepository).credentials.password shouldBe null
+                    repositories.forEach { repo ->
+                        if (repo is MavenArtifactRepository) {
+                            repo.credentials.username.shouldBe(null)
+                            repo.credentials.password.shouldBe(null)
+                        }
+                    }
                     println("None of the repositories have credentials set")
                 }
             }
         """.trimIndent())
-        File("${tempDir.absolutePath}/build.gradle.kts").writeText("""
+        buildBuildFile("""
             repositories {
                 mavenLocal()
                 mavenCentral()
@@ -109,13 +110,14 @@ class CodeArtifactRepoConfigurerTest {
         buildSettingsFile("""
             gradle.allprojects {
                 afterEvaluate {
+                    println("Project Build File Publishing Results:")
                     extensions.findByType(PublishingExtension::class.java)?.let { publishingExtension ->
                         verifyRepositories(publishingExtension.repositories)
                     }
                 }
             }
         """.trimIndent())
-        File("${tempDir.absolutePath}/build.gradle.kts").writeText("""
+        buildBuildFile("""
             plugins {
                 `maven-publish`
             }
@@ -195,6 +197,10 @@ class CodeArtifactRepoConfigurerTest {
             }
         """.trimIndent()
         )
+    }
+
+    private fun buildBuildFile(content: String) {
+        File("${tempDir.absolutePath}/build.gradle.kts").writeText(content)
     }
 
     private fun runBuild() {
