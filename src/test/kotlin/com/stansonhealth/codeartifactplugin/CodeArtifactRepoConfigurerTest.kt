@@ -50,7 +50,7 @@ class CodeArtifactRepoConfigurerTest {
     }
 
     @Test
-    fun `should successfully set credentials for repositories in the settings and project build files`() {
+    fun `should set credentials for repositories in the settings and project build files`() {
         buildSettingsFile("""
             gradle.settingsEvaluated {
                 println("Settings Results:")
